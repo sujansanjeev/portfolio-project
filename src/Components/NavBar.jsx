@@ -14,7 +14,7 @@ const Navbar = ({ handleScroll }) => {
     { label: "Contact", section: "contact" },
   ];
 
-  // Intersection Observer for updating the active section
+  
   useEffect(() => {
     const options = {
       root: null,
@@ -40,20 +40,20 @@ const Navbar = ({ handleScroll }) => {
   const handleNavClick = (section) => {
     handleScroll(section);
     setActiveSection(section);
-    setIsMenuOpen(false); // Close mobile menu when a link is clicked
+    setIsMenuOpen(false); 
   };
 
   return (
     <>
       {/* Navbar */}
-      <nav className="m-3 fixed left-1/2 transform -translate-x-1/2 w-[85%] bg-white/70 backdrop-blur-md z-50 shadow-md rounded-full">
+      <nav className=" h-auto m-3 fixed left-1/2 transform -translate-x-1/2 w-[85%] bg-white/70 backdrop-blur-md z-50 shadow-md rounded-full">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center relative">
           {/* Logo */}
           <div
             onClick={() => handleNavClick("home")}
             className="cursor-pointer transform transition-transform hover:scale-105"
           >
-            <img src={logo} alt="logo" className="h-16 w-auto" />
+            <img src={logo} alt="logo" className="h-12 w-auto" />
           </div>
 
           {/* Mobile Menu Button */}
@@ -95,7 +95,7 @@ const Navbar = ({ handleScroll }) => {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex justify-center items-center space-x-6 rounded-3xl border border-black border-2 mx-3">
+          <div className="hidden md:flex justify-center items-center space-x-3 rounded-3xl  border-black border mx-3 text-sm">
             {navItems.map((item) => (
               <div
                 key={item.section}

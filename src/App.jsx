@@ -8,6 +8,7 @@ import Projects from './Components/Projects';
 import ContactMe from './Components/ContactMe';
 import Experience from './Components/Experience';
 import { gsap } from 'gsap';
+import bg from './assets/bg1.jpg';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 gsap.registerPlugin(ScrollToPlugin);
@@ -25,30 +26,40 @@ const App = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div style={{
+      backgroundImage: `url(${bg})`,
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center', 
+      backgroundAttachment: 'fixed', 
+      minHeight: '100vh',
+      position: 'relative',
+      zIndex: 0
+    }}>
       <Navbar handleScroll={handleScroll} />
-     
-      <section id="home" className="h-screen bg-blue-50">
-        <Home />
-      </section>
-      <section id="about" className="h-screen bg-white">
-        <About />
-      </section>
-      <section id="education" className="h-screen bg-gray-200">
-        <Education />
-      </section>
-      <section id="skills" className="h-screen bg-blue-100">
-        <Skills />
-      </section>
-      <section id="experience" className="h-screen bg-white">
-        <Experience />
-      </section>
-      <section id="projects" className="h-screen bg-white">
-        <Projects />
-      </section>
-      <section id="contact" className="h-screen bg-gray-100">
-        <ContactMe />
-      </section>
+      
+      <div style={{ position: 'relative', zIndex: 10 }}>
+        <section id="home" className="h-screen bg-transparent">
+          <Home />
+        </section>
+        <section id="about" className="h-auto bg-transparent">
+          <About />
+        </section>
+        <section id="education" className="h-auto bg-transparent">
+          <Education />
+        </section>
+        <section id="skills" className="h-auto bg-transparent">
+          <Skills />
+        </section>
+        <section id="experience" className="h-auto bg-transparent">
+          <Experience />
+        </section>
+        <section id="projects" className="h-auto bg-transparent">
+          <Projects />
+        </section>
+        <section id="contact" className="h-auto bg-transparent">
+          <ContactMe />
+        </section>
+      </div>
     </div>
   );
 };

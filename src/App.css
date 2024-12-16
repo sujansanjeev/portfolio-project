@@ -1,0 +1,11 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-image: url('./assets/bg.jpg');
+    background-size: 150%; /* Adjust zoom level */
+    background-position: center;
+    background-attachment: fixed; /* Optional: make background stay fixed */
+  }
+  
