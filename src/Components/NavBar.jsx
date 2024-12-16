@@ -14,7 +14,6 @@ const Navbar = ({ handleScroll }) => {
     { label: "Contact", section: "contact" },
   ];
 
-  
   useEffect(() => {
     const options = {
       root: null,
@@ -22,11 +21,18 @@ const Navbar = ({ handleScroll }) => {
     };
 
     const observer = new IntersectionObserver((entries) => {
+      let isAnySectionVisible = false;
+
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
+          isAnySectionVisible = true;
         }
       });
+
+      if (!isAnySectionVisible) {
+        setActiveSection("home");
+      }
     }, options);
 
     navItems.forEach((item) => {
@@ -34,29 +40,38 @@ const Navbar = ({ handleScroll }) => {
       if (section) observer.observe(section);
     });
 
+    const homeSection = document.getElementById("home");
+    if (homeSection) observer.observe(homeSection);
+
     return () => observer.disconnect();
-  }, []);
+  }, [navItems]);
 
   const handleNavClick = (section) => {
     handleScroll(section);
     setActiveSection(section);
-    setIsMenuOpen(false); 
+    setIsMenuOpen(false);
   };
 
   return (
     <>
-      {/* Navbar */}
-      <nav className=" h-auto m-3 fixed left-1/2 transform -translate-x-1/2 w-[85%] bg-white/70 backdrop-blur-md z-50 shadow-md rounded-full">
+      <nav className=" h-auto top-0 fixed left-1/2 transform -translate-x-1/2 w-[100%] bg-[linear-gradient(to_bottom,_white_70%,_rgba(255,255,255,0.5)_90%,_transparent_100%)] backdrop-blur-md z-50  scr" >
         <div className="container mx-auto px-4 py-3 flex justify-between items-center relative">
-          {/* Logo */}
-          <div
-            onClick={() => handleNavClick("home")}
-            className="cursor-pointer transform transition-transform hover:scale-105"
-          >
-            <img src={logo} alt="logo" className="h-12 w-auto" />
+          <div className="flex items-center space-x-3">
+            <div
+              onClick={() => handleNavClick("home")}
+              className="cursor-pointer transform transition-transform hover:scale-105"
+            >
+              <img src={logo} alt="logo" className="h-12 w-auto" />
+            </div>
+
+            <span
+              onClick={() => handleNavClick("home")}
+              className="hidden md:inline-block text-xl font-semibold text-gray-800"
+            >
+              SUJAN SANJEEV
+            </span>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="z-[60] md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -94,8 +109,7 @@ const Navbar = ({ handleScroll }) => {
             )}
           </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex justify-center items-center space-x-3 rounded-3xl  border-black border mx-3 text-sm">
+          <div className="hidden md:flex justify-center items-center space-x-3 rounded-3xl  border-black border mx-3 text-sm font-thin" >
             {navItems.map((item) => (
               <div
                 key={item.section}
@@ -119,7 +133,6 @@ const Navbar = ({ handleScroll }) => {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div
           className={`
@@ -157,6 +170,3 @@ const Navbar = ({ handleScroll }) => {
 };
 
 export default Navbar;
-
-
-

@@ -1,11 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-image: url('./assets/bg.jpg');
-    background-size: 150%; /* Adjust zoom level */
-    background-position: center;
-    background-attachment: fixed; /* Optional: make background stay fixed */
+body{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+    
+}
+
+
+
+/* Add to App.css */
+.arrow-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px); /* Slide up effect */
+    transition: opacity 0.4s ease, transform 0.4s ease; /* Smooth fade and slide */
+    z-index: 100;
   }
+  
+  .arrow-btn.show {
+    opacity: 1;
+    transform: translateY(0); /* Slide into place */
+  }
+  
+  .arrow-btn:hover {
+    background-color: #555;
+  }
+  
+  .arrow-btn .arrow-icon {
+    color: white;
+    font-size: 20px;
+  }
+  
   
