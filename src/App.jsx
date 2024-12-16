@@ -182,7 +182,7 @@ const App = () => {
         <section id="home" className="h-screen bg-transparent">
           <Home />
         </section>
-        <section id="about" className="h-screen bg-transparent">
+        <section id="about" className="h-auto bg-transparent">
           <About />
         </section>
         <section id="education" className="h-auto bg-transparent">

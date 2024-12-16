@@ -1,181 +1,6 @@
-// import React, { useState, useEffect } from "react";
-// import logo from "../assets/logo.png";
-
-// const Navbar = ({ handleScroll }) => {
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-//   const [activeSection, setActiveSection] = useState("");
-
-//   const navItems = [
-//     { label: "About", section: "about" },
-//     { label: "Education", section: "education" },
-//     { label: "Skills", section: "skills" },
-//     { label: "Experience", section: "experience" },
-//     { label: "Projects", section: "projects" },
-//     { label: "Contact", section: "contact" },
-//   ];
-
-//   useEffect(() => {
-//     const options = {
-//       root: null,
-//       threshold: 0.3,
-//     };
-
-//     const observer = new IntersectionObserver((entries) => {
-//       let isAnySectionVisible = false;
-
-//       entries.forEach((entry) => {
-//         if (entry.isIntersecting) {
-//           setActiveSection(entry.target.id);
-//           isAnySectionVisible = true;
-//         }
-//       });
-
-//       if (!isAnySectionVisible) {
-//         setActiveSection("home");
-//       }
-//     }, options);
-
-//     navItems.forEach((item) => {
-//       const section = document.getElementById(item.section);
-//       if (section) observer.observe(section);
-//     });
-
-//     const homeSection = document.getElementById("home");
-//     if (homeSection) observer.observe(homeSection);
-
-//     return () => observer.disconnect();
-//   }, [navItems]);
-
-//   const handleNavClick = (section) => {
-//     handleScroll(section);
-//     setActiveSection(section);
-//     setIsMenuOpen(false);
-//   };
-
-//   return (
-//     <>
-//       <nav className=" h-auto top-0 fixed left-1/2 transform -translate-x-1/2 w-[100%] bg-[linear-gradient(to_bottom,_white_70%,_rgba(255,255,255,0.5)_90%,_transparent_100%)] backdrop-blur-md z-50  scr" >
-//         <div className="container mx-auto px-4 py-3 flex justify-between items-center relative">
-//           <div className="flex items-center space-x-3">
-//             <div
-//               onClick={() => handleNavClick("home")}
-//               className="cursor-pointer transform transition-transform hover:scale-105"
-//             >
-//               <img src={logo} alt="logo" className="h-12 w-auto" />
-//             </div>
-
-//             <span
-//               onClick={() => handleNavClick("home")}
-//               className="hidden md:inline-block text-xl font-semibold text-gray-800"
-//             >
-//               SUJAN SANJEEV
-//             </span>
-//           </div>
-
-//           <button
-//             className="z-[60] md:hidden"
-//             onClick={() => setIsMenuOpen(!isMenuOpen)}
-//           >
-//             {isMenuOpen ? (
-//               <svg
-//                 xmlns="http://www.w3.org/2000/svg"
-//                 className="h-6 w-6 text-gray-700"
-//                 fill="none"
-//                 viewBox="0 0 24 24"
-//                 stroke="currentColor"
-//               >
-//                 <path
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                   strokeWidth={2}
-//                   d="M6 18L18 6M6 6l12 12"
-//                 />
-//               </svg>
-//             ) : (
-//               <svg
-//                 xmlns="http://www.w3.org/2000/svg"
-//                 className="h-6 w-6 text-gray-700"
-//                 fill="none"
-//                 viewBox="0 0 24 24"
-//                 stroke="currentColor"
-//               >
-//                 <path
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                   strokeWidth={2}
-//                   d="M4 6h16M4 12h16M4 18h16"
-//                 />
-//               </svg>
-//             )}
-//           </button>
-
-//           <div className="hidden md:flex justify-center items-center space-x-3 rounded-3xl  border-black border mx-3 text-sm font-thin" >
-//             {navItems.map((item) => (
-//               <div
-//                 key={item.section}
-//                 onClick={() => handleNavClick(item.section)}
-//                 className={`
-//                   relative px-3 py-2 rounded-md transition-all duration-300 cursor-pointer 
-//                   ${
-//                     activeSection === item.section
-//                       ? "bg-black text-white scale-80 rounded-3xl"
-//                       : "hover:bg-gray-300 hover:scale-80 rounded-3xl"
-//                   }
-//                 `}
-//               >
-//                 <span className="font-medium">{item.label}</span>
-//                 {activeSection === item.section && (
-//                   <span className="absolute bottom-0 left-0 w-full h-1 transparent" />
-//                 )}
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </nav>
-
-//       {isMenuOpen && (
-//         <div
-//           className={`
-//       fixed inset-0 z-[60] md:hidden
-//       bg-white/90 backdrop-blur-lg
-//       transition-transform duration-500 ease-in-out
-//     `}
-//         >
-//           <div className="flex flex-col h-full justify-center items-center px-6 space-y-6">
-//             {navItems.map((item) => (
-//               <button
-//                 key={item.section}
-//                 onClick={() => handleNavClick(item.section)}
-//                 className={`
-//             text-2xl font-semibold text-center py-3 w-full
-//             transition-all duration-300
-//             ${
-//               activeSection === item.section
-//                 ? "text-black scale-105"
-//                 : "text-gray-700 hover:text-blue-500"
-//             }
-//           `}
-//               >
-//                 {item.label}
-//                 {activeSection === item.section && (
-//                   <div className="w-full h-1 bg-black mt-2" />
-//                 )}
-//               </button>
-//             ))}
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Navbar;
-
-
-
 import React, { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
-import resume from "../assets/resume.pdf"; // Update with the actual path to your resume file
+import resume from "../assets/resume.pdf"; 
 
 const Navbar = ({ handleScroll }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -339,7 +164,7 @@ const Navbar = ({ handleScroll }) => {
               </button>
             ))}
 
-            {/* Mobile resume download */}
+            
             <a
               href={resume}
               download="Sujan_Sanjeev_Resume"
@@ -351,16 +176,18 @@ const Navbar = ({ handleScroll }) => {
         </div>
       )}
 
-      {/* Resume button fixed position with margin from bottom */}
-      <div className="fixed bottom-10 right-10 z-50">
+      <div className="fixed bottom-10 left-10 z-50 group">
         <a
           href={resume}
           download="Sujan_Sanjeev_Resume"
-          className="flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"
         >
-          <span>Download Resume</span>
-          <i className="fas fa-download"></i> {/* Font Awesome download icon */}
+          <i className="fas fa-download"></i> 
         </a>
+        
+        <span className="absolute bottom-16 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black text-white text-xs font-medium px-2 py-1 rounded-md shadow-md transition-opacity duration-300">
+          Download Resume
+        </span>
       </div>
     </>
   );
