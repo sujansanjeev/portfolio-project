@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
-import resume from "../assets/resume.pdf"; 
+import resume from "../assets/resume.pdf";
 
 const Navbar = ({ handleScroll }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,7 +12,6 @@ const Navbar = ({ handleScroll }) => {
     { label: "Skills", section: "skills" },
     { label: "Experience", section: "experience" },
     { label: "Projects", section: "projects" },
-    { label: "Contact", section: "contact" },
   ];
 
   useEffect(() => {
@@ -58,16 +57,25 @@ const Navbar = ({ handleScroll }) => {
       <nav className="h-auto top-0 fixed left-1/2 transform -translate-x-1/2 w-[100%] bg-[linear-gradient(to_bottom,_white_70%,_rgba(255,255,255,0.5)_90%,_transparent_100%)] backdrop-blur-md z-50">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center relative">
           <div className="flex items-center space-x-3">
+            {/* Logo with Gradient */}
             <div
               onClick={() => handleNavClick("home")}
               className="cursor-pointer transform transition-transform hover:scale-105"
             >
-              <img src={logo} alt="logo" className="h-12 w-auto" />
+              <img
+                src={logo}
+                alt="logo"
+                className="h-12 w-auto"
+                style={{
+                  filter: "hue-rotate(90deg)", // Adds a gradient-like effect
+                }}
+              />
             </div>
 
+            {/* Name with Gradient */}
             <span
               onClick={() => handleNavClick("home")}
-              className="hidden md:inline-block text-xl font-semibold text-gray-800"
+              className="hidden md:inline-block text-xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
             >
               SUJAN SANJEEV
             </span>
@@ -110,17 +118,17 @@ const Navbar = ({ handleScroll }) => {
             )}
           </button>
 
-          <div className="hidden md:flex justify-center items-center space-x-3 rounded-3xl border-black border mx-3 text-sm font-thin">
+          <div className="hidden md:flex justify-center items-center space-x-3 rounded-3xl  mx-3 text-sm font-thin">
             {navItems.map((item) => (
               <div
                 key={item.section}
                 onClick={() => handleNavClick(item.section)}
                 className={`
-                  relative px-3 py-2 rounded-md transition-all duration-300 cursor-pointer
+                  relative px-3 py-2 rounded-full transition-all duration-300 cursor-pointer text-gray-600
                   ${
                     activeSection === item.section
-                      ? "bg-black text-white scale-80 rounded-3xl"
-                      : "hover:bg-gray-300 hover:scale-80 rounded-3xl"
+                      ? "bg-black text-white scale-80 "
+                      : "hover:bg-gray-300 hover:scale-80 "
                   }
                 `}
               >
@@ -152,7 +160,7 @@ const Navbar = ({ handleScroll }) => {
                   transition-all duration-300
                   ${
                     activeSection === item.section
-                      ? "text-black scale-105"
+                      ? "text-black scale-105 rounded-3xl"
                       : "text-gray-700 hover:text-blue-500"
                   }
                 `}
@@ -164,7 +172,6 @@ const Navbar = ({ handleScroll }) => {
               </button>
             ))}
 
-            
             <a
               href={resume}
               download="Sujan_Sanjeev_Resume"
@@ -180,11 +187,11 @@ const Navbar = ({ handleScroll }) => {
         <a
           href={resume}
           download="Sujan_Sanjeev_Resume"
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white transition-all duration-300 shadow-lg"
         >
-          <i className="fas fa-download"></i> 
+          <i className="fas fa-download"></i>
         </a>
-        
+
         <span className="absolute bottom-16 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-black text-white text-xs font-medium px-2 py-1 rounded-md shadow-md transition-opacity duration-300">
           Download Resume
         </span>
