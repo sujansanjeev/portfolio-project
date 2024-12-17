@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import landingImage from "../assets/welcome1.jpg"; 
+import landingImage from "../assets/welcome1.png";
 
 const Home = () => {
   const designations = [
@@ -9,6 +9,10 @@ const Home = () => {
     "Linux Freak 🐧",
     "Music Artist 🎵",
   ];
+
+  const name = [
+    "Hi, I'm  Sujan Sanjeev  "
+];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
@@ -31,7 +35,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-  // Handle mouse movement
   useEffect(() => {
     const handleMouseMove = (event) => {
       const { clientX: x, clientY: y } = event;
@@ -45,11 +48,21 @@ const Home = () => {
     };
   }, []);
 
-  // Subtle tilt effect (rotation) based on mouse position
   const tiltEffect = {
-    rotateX: (mousePosition.y - window.innerHeight / 2) / 40, // Rotate based on Y-axis
-    rotateY: (mousePosition.x - window.innerWidth / 2) / 40, // Rotate based on X-axis
+    rotateX: (mousePosition.y - window.innerHeight / 2) / 40,
+    rotateY: (mousePosition.x - window.innerWidth / 2) / 40,
     transition: { type: "spring", stiffness: 300, damping: 20 },
+  };
+
+  // Gentle bounce effect for the text
+  const bounceEffect = {
+    y: ["0", "-10px", "0"], // Moves up and down by 10px
+    transition: {
+      duration: 2,
+      ease: "easeInOut",
+      repeat: Infinity,
+      repeatDelay: 2,
+    },
   };
 
   return (
@@ -61,25 +74,36 @@ const Home = () => {
       style={{ fontFamily: "Quantico, sans-serif" }}
     >
       <div className="container mx-auto px-4 text-center my-24">
-        <h1 className="text-5xl font-bold mb-4">
+        {/* Animated text with a gentle up and down effect */}
+        <motion.h1
+          className="text-5xl font-bold mb-4"
+          style={{
+            display: "inline-block",
+            marginBottom: "1rem",
+          }}
+          animate={bounceEffect}
+        >
           <span className="text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text">
-            Hi, I'm Sujan Sanjeev
+            {name}
           </span>
-        </h1>
+        </motion.h1>
 
-        {/* Circular Image with subtle tilt effect */}
+        {/* Image with tilt effect */}
         <motion.div
           className="mx-auto mb-8"
           style={{ perspective: 1000 }}
           animate={tiltEffect}
         >
-          <img
-            src={landingImage}
-            alt="Sujan"
-            className="w-auto h-80 rounded-full mx-auto shadow-lg"
-          />
+          <div className="w-96 h-96 rounded-full overflow-hidden mx-auto ">
+            <img
+              src={landingImage}
+              alt="Sujan"
+              className="w-full h-full object-fit"
+            />
+          </div>
         </motion.div>
 
+        {/* Designation with fade effect */}
         <p
           className={`text-3xl text-gray-600 mb-8 transition-opacity duration-500 ${
             fade ? "opacity-100" : "opacity-0"
@@ -88,6 +112,7 @@ const Home = () => {
           {designations[currentIndex]}
         </p>
 
+        {/* Button */}
         <a
           href="#contact"
           className="bg-white text-black px-6 py-3 shadow-lg hover:bg-black hover:text-white transition border-2 border-black rounded-3xl"
@@ -100,6 +125,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
