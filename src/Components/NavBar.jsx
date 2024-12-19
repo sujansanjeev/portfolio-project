@@ -75,7 +75,7 @@ const Navbar = ({ handleScroll }) => {
             {/* Name with Gradient */}
             <span
               onClick={() => handleNavClick("home")}
-              className="hidden md:inline-block text-xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+              className="hidden md:inline-block text-xl font-semibold text-black"
             >
               SUJAN SANJEEV
             </span>
