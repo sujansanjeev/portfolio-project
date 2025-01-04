@@ -5,6 +5,7 @@ import landingImage from "../assets/welcome2.png";
 const Home = () => {
   const designations = [
     "<Full Stack Developer/>",
+    "Gen A.I. Enthusiast 🤖",
     "Tech Enthusiast 🖥️",
     "Linux Freak 🐧",
     "Music Artist 🎵",
