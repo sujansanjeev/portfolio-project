@@ -12,6 +12,7 @@ const Navbar = ({ handleScroll }) => {
     { label: "Skills", section: "skills" },
     { label: "Experience", section: "experience" },
     { label: "Projects", section: "projects" },
+    { label: "certifications", section: "certifications" }
   ];
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const Navbar = ({ handleScroll }) => {
                 alt="logo"
                 className="h-12 w-auto"
                 style={{
-                  filter: "hue-rotate(90deg)", // Adds a gradient-like effect
+                  filter: "hue-rotate(90deg)", 
                 }}
               />
             </div>

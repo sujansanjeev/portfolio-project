@@ -13,6 +13,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { FaArrowUp } from 'react-icons/fa'; // FontAwesome arrow icon
 import "./App.css";
 import 'animate.css';
+import Certifications from './Components/certifications';
 
 
 gsap.registerPlugin(ScrollToPlugin);
@@ -84,6 +85,9 @@ const App = () => {
         </section>
         <section id="projects" className="h-auto bg-transparent">
           <Projects />
+        </section>
+        <section id="certifications" className="h-auto bg-transparent">
+          <Certifications />
         </section>
         <section id="contact" className="h-auto bg-transparent">
           <ContactMe />
