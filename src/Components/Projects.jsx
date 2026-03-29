@@ -1,5 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import AnimatedText from './AnimatedText';
 import sign from '../assets/sign.jpg';
 import gpt from '../assets/gpt.jpg';
 import rover from '../assets/rover.jpg';
@@ -7,83 +7,98 @@ import rover from '../assets/rover.jpg';
 const Projects = () => {
   const projects = [
     {
-      name: 'Autonomous Off-Road Rover on Unknown Terrain Without Map',
-      description: `Developed an autonomous rover using LiDAR and OpenCV for real-time terrain mapping and geo-location navigation. Implemented SLAM algorithms for simultaneous mapping and localization. Designed advanced path planning algorithms for optimal route selection in challenging terrains.`,
-      duration: 'September 2023 - April 2024',
-      technologies: 'ROS, Python, SLAM, Machine Learning, MQTT',
+      name: 'Autonomous Off-Road Rover',
+      description: 'Developed an autonomous rover using LiDAR and OpenCV for real-time terrain mapping and geo-location navigation. Implemented SLAM algorithms for simultaneous mapping and localization.',
+      duration: 'Sept 2023 - April 2024',
+      technologies: ['ROS', 'Python', 'SLAM', 'ML', 'MQTT'],
       image: rover,
+      gradient: 'from-blue-500 to-cyan-500',
     },
     {
-      name: 'AI Teaching Assistant for YouTube',
-      description: `Created a web application using GPT-3 API to answer user queries based on YouTube video content. Implemented the solution using Python, Streamlit, and GPT-3 API.`,
+      name: 'AI Teaching Assistant',
+      description: 'Created a web application using GPT-3 API to answer user queries based on YouTube video content. Implemented using Python, Streamlit, and GPT-3 API.',
       duration: 'March 2023 - April 2023',
-      technologies: 'Python, Streamlit, GPT-3 API',
+      technologies: ['Python', 'Streamlit', 'GPT-3', 'NLP'],
       image: gpt,
+      gradient: 'from-purple-500 to-pink-500',
     },
     {
       name: 'Sign Language Conversion Tool',
-      description: `Developed a web application for bidirectional conversion between sign language and speech. Utilized Python, Mediapipe, Streamlit, and OpenCV for implementation.`,
-      duration: 'January 2023 - March 2023',
-      technologies: 'Python, Mediapipe, Streamlit, OpenCV',
-      // projectLink: 'https://github.com/your-repository',
+      description: 'Developed a web application for bidirectional conversion between sign language and speech. Utilized Python, Mediapipe, Streamlit, and OpenCV for implementation.',
+      duration: 'Jan 2023 - March 2023',
+      technologies: ['Python', 'Mediapipe', 'OpenCV', 'Streamlit'],
       image: sign,
+      gradient: 'from-orange-500 to-red-500',
     },
   ];
 
   return (
-    <section id="projects" className="py-20 bg-transparent">
-      <div className="container mx-auto px-4">
-        {/* Section Title */}
-        <motion.h2
-          className="text-4xl font-bold text-center mb-12 text-gray-800"
+    <section id="projects" className="py-20 md:py-32 bg-white">
+      <div className="container mx-auto px-4 md:px-6">
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          Projects
-        </motion.h2>
+          <AnimatedText
+            text="Projects"
+            className="text-4xl md:text-5xl font-bold text-gray-900"
+            delay={200}
+          />
+          <p className="text-gray-500 mt-4 text-lg">Things I&apos;ve built</p>
+        </motion.div>
 
-        {/* Project Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
-              key={project.name}
-              className="relative p-6 rounded-lg bg-white/20 backdrop-blur-md shadow-md border border-transparent transition-all duration-300"
+              key={index}
+              className="group relative"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {/* Gradient Border (Pseudo-element) */}
-              <div className="absolute inset-0 rounded-lg border-gradient z-[-1] opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+              <motion.div
+                className="relative h-full bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300"
+                whileHover={{ y: -10 }}
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                </div>
 
-              {/* Project Thumbnail */}
-              <img
-                src={project.image}
-                alt={`${project.name} Thumbnail`}
-                className="w-full h-40 object-cover rounded-lg mb-4"
-              />
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className={`px-3 py-1 bg-gradient-to-r ${project.gradient} text-white text-xs font-medium rounded-full`}>
+                      {project.duration}
+                    </span>
+                  </div>
 
-              {/* Project Content */}
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">{project.name}</h3>
-              <p className="text-gray-600 mb-4">{project.description}</p>
-              <p className="text-gray-600 mb-2">
-                <strong>Duration:</strong> {project.duration}
-              </p>
-              <p className="text-gray-600 mb-4">
-                <strong>Technologies Used:</strong> {project.technologies}
-              </p>
-              {project.projectLink && (
-                <a
-                  href={project.projectLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  View Project on GitHub
-                </a>
-              )}
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    {project.name}
+                  </h3>
+
+                  <p className="text-gray-500 text-sm mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-2 py-1 bg-gray-50 text-gray-600 rounded-md text-xs font-medium border border-gray-100"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           ))}
         </div>

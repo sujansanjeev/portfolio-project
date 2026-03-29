@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './Components/NavBar';
 import About from './Components/About';
 import Home from './Components/Home';
@@ -7,14 +7,12 @@ import Skills from './Components/Skills';
 import Projects from './Components/Projects';
 import ContactMe from './Components/ContactMe';
 import Experience from './Components/Experience';
-import { gsap } from 'gsap';
-import bg from './assets/white-grid.jpg';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { FaArrowUp } from 'react-icons/fa'; // FontAwesome arrow icon
-import "./App.css";
-import 'animate.css';
 import Certifications from './Components/certifications';
-
+import ParticleBackground from './Components/ParticleBackground';
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { FaArrowUp } from 'react-icons/fa';
+import './App.css';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -35,7 +33,7 @@ const App = () => {
   useEffect(() => {
     const handleScrollEvent = () => {
       const homeSection = document.getElementById('home');
-      if (window.scrollY > homeSection.clientHeight) {
+      if (homeSection && window.scrollY > homeSection.clientHeight / 2) {
         setShowArrow(true);
       } else {
         setShowArrow(false);
@@ -53,60 +51,56 @@ const App = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-        minHeight: '100vh',
-        position: 'relative',
-        zIndex: 0,
-        
-      }}
-    >
-      <Navbar handleScroll={handleScroll} />
+    <>
+      <ParticleBackground />
+      <div className="relative z-10">
+        <Navbar handleScroll={handleScroll} />
 
-      <div style={{ position: 'relative', zIndex: 10 }}>
-        <section id="home" className="h-screen bg-transparent">
+        <section id="home">
           <Home />
         </section>
-        <section id="about" className="h-auto bg-transparent">
+
+        <section id="about">
           <About />
         </section>
-        <section id="education" className="h-auto bg-transparent">
+
+        <section id="education">
           <Education />
         </section>
-        <section id="skills" className="h-auto bg-transparent">
+
+        <section id="skills">
           <Skills />
         </section>
-        <section id="experience" className="h-auto bg-transparent">
+
+        <section id="experience">
           <Experience />
         </section>
-        <section id="projects" className="h-auto bg-transparent">
+
+        <section id="projects">
           <Projects />
         </section>
-        <section id="certifications" className="h-auto bg-transparent">
+
+        <section id="certifications">
           <Certifications />
         </section>
-        <section id="contact" className="h-auto bg-transparent">
+
+        <section id="contact">
           <ContactMe />
         </section>
       </div>
 
-      {/* Scroll to top arrow */}
       <div
         onClick={scrollToHome}
-        className={`fixed bottom-5 right-5 bg-gray-800 text-white p-3 rounded-full cursor-pointer transition-all duration-500 ease-in-out transform ${
-          showArrow ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-        } hover:bg-gray-600 z-50`} 
+        className={`fixed bottom-6 right-6 p-3 rounded-full cursor-pointer transition-all duration-500 shadow-lg z-50 ${
+          showArrow
+            ? 'opacity-100 translate-y-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+            : 'opacity-0 translate-y-5 pointer-events-none'
+        } hover:shadow-xl`}
       >
-        <FaArrowUp className="text-white text-xl" />
+        <FaArrowUp className="text-lg" />
       </div>
-    </div>
+    </>
   );
 };
 
 export default App;
-
-

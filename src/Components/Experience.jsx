@@ -1,85 +1,172 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import gorillaLogo from '../assets/gorilla.png';
 import tataLogo from '../assets/tata.png';
+import fiservLogo from '../assets/fiserv.png';
 
 const Experience = () => {
   const experiences = [
     {
-      company: 'Gorilla Technology (India) Private Limited',
-      position: 'Software Engineer Intern',
-      duration: 'May 2024 - July 2024',
-      thumbnail: gorillaLogo,
-      responsibilities: [
-        'Developed automation scripts for router topology updates in NETBOX using Ansible, improving efficiency by 30%',
-        'Modified OpenWRT UI code to implement external server authentication, enhancing security protocols',
-        'Created a web application for internal lab usage, streamlining data collection and analysis processes',
-        'Designed and implemented UI for SD-WAN device inventory and dashboard, improving visibility and management of network devices',
-        'Developed backend APIs for VPP and FRR using Python, facilitating seamless integration with existing systems',
-        'Collaborated with cross-functional teams to deliver high-quality software solutions on schedule',
+      company: 'FISERV India',
+      position: 'Software Engineer',
+      duration: 'June 2025 - Present',
+      location: 'Chennai, India',
+      type: 'Full-time',
+      description: 'Working on mainframe development and financial services technology',
+      highlights: [
+        'Enterprise-level financial applications',
+        'Mainframe technologies for mission-critical systems',
+        'Cross-functional team collaboration',
       ],
+      skills: ['Mainframe', 'COBOL', 'JCL', 'DB2', 'CICS'],
+      isCurrent: true,
+      gradient: 'from-green-500 to-emerald-500',
+      logo: fiservLogo,
     },
     {
-      company: 'Tata Communications Ltd.',
-      position: 'Full Stack Web Developer Intern',
-      duration: 'June 2023 - July 2023',
-      thumbnail: tataLogo,
-      responsibilities: [
-        'Developed a full-stack e-commerce platform using Angular for front-end and Flask for back-end',
-        'Successfully deployed the e-commerce model on a test service',
-        'Implemented user-friendly interfaces and robust back-end systems with advanced features',
-        'Strengthened skills in Angular, Flask, and related libraries',
-        'Demonstrated strong problem-solving, teamwork, and project management abilities',
+      company: 'Gorilla Technology',
+      position: 'Software Engineer Intern',
+      duration: 'May 2024 - July 2024',
+      location: 'Taiwan (Remote)',
+      type: 'Internship',
+      highlights: [
+        'Network automation with Ansible & NETBOX',
+        'OpenWRT UI development',
+        'SD-WAN dashboard design',
       ],
+      skills: ['Python', 'Ansible', 'JavaScript', 'React'],
+      isCurrent: false,
+      gradient: 'from-blue-500 to-cyan-500',
+      logo: gorillaLogo,
+    },
+    {
+      company: 'Tata Communications',
+      position: 'Full Stack Developer Intern',
+      duration: 'June 2023 - July 2023',
+      location: 'Chennai, India',
+      type: 'Internship',
+      highlights: [
+        'Full-stack e-commerce platform',
+        'Angular + Flask development',
+        'RESTful API implementation',
+      ],
+      skills: ['Angular', 'Flask', 'Python', 'SQL'],
+      isCurrent: false,
+      gradient: 'from-purple-500 to-pink-500',
+      logo: tataLogo,
     },
   ];
 
   return (
-    <section id="experience" className="py-12 bg-transparent">
-      <div className="container mx-auto px-4">
-        {/* Section Title */}
-        <motion.h2
-          className="text-4xl font-bold text-center mb-12 text-gray-800"
+    <section id="experience" className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4 md:px-6">
+        {/* Centered Header */}
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-12 md:mb-16"
         >
-          Professional Experience
-        </motion.h2>
+          <motion.h2
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Professional Journey
+          </motion.h2>
+          <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
+            Building expertise through diverse experiences
+          </p>
+        </motion.div>
 
-        {/* Vertical Card Layout */}
-        <div className="space-y-12">
+        {/* Experience Cards */}
+        <div className="max-w-4xl mx-auto space-y-6 md:space-y-8">
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
-              className={`flex flex-col md:flex-row ${
-                index % 2 === 0 ? '' : 'md:flex-row-reverse'
-              } items-center md:items-start gap-8`}
-              initial={{ opacity: 0, y: 50 }}
+              className="relative"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              {/* Thumbnail */}
-              <div className="flex-shrink-0">
-                <img
-                  src={exp.thumbnail}
-                  alt={`${exp.company} logo`}
-                  className="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full shadow-md border-gradient-to-r"
-                />
-              </div>
+              <div className={`relative rounded-2xl md:rounded-3xl overflow-hidden ${exp.isCurrent ? 'ring-2 ring-green-500/30' : ''}`}>
+                {/* Gradient accent bar */}
+                <div className={`absolute top-0 left-0 w-1 md:w-2 h-full bg-gradient-to-b ${exp.gradient}`} />
+                
+                <div className="bg-white p-5 md:p-8 pl-6 md:pl-10">
+                  <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
+                    {/* Company Logo */}
+                    <div className="flex-shrink-0 flex items-center justify-center sm:items-start">
+                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-white border border-gray-200 flex items-center justify-center shadow-sm">
+                        {exp.logo ? (
+                          <img src={exp.logo} alt={exp.company} className="w-10 h-10 md:w-12 md:h-12 object-contain" />
+                        ) : (
+                          <span className="text-gray-700 font-bold text-xl md:text-2xl">{exp.company.charAt(0)}</span>
+                        )}
+                      </div>
+                    </div>
 
-              {/* Content */}
-              <div className="bg-white/80 backdrop-blur-lg p-6 rounded-lg shadow-md w-full border-2 border-gradient-to-r">
-                <h3 className="text-2xl font-semibold text-gray-800">{exp.position}</h3>
-                <span className="text-gray-600 text-sm block mb-4">{exp.duration}</span>
-                <h4 className="text-xl text-gray-700 mb-4">{exp.company}</h4>
-                <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                  {exp.responsibilities.map((responsibility, respIndex) => (
-                    <li key={respIndex}>{responsibility}</li>
-                  ))}
-                </ul>
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      {/* Header */}
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                        <div>
+                          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900">{exp.position}</h3>
+                          <p className="text-blue-600 font-medium text-sm md:text-base">{exp.company}</p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {exp.isCurrent && (
+                            <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full whitespace-nowrap">
+                              Current
+                            </span>
+                          )}
+                          <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full whitespace-nowrap">
+                            {exp.type}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Meta */}
+                      <div className="flex flex-wrap gap-3 md:gap-4 text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
+                        <span className="flex items-center gap-1">
+                          <span>📅</span> {exp.duration}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <span>📍</span> {exp.location}
+                        </span>
+                      </div>
+
+                      {/* Description */}
+                      {exp.description && (
+                        <p className="text-gray-600 text-sm md:text-base mb-3 md:mb-4 hidden sm:block">{exp.description}</p>
+                      )}
+
+                      {/* Highlights */}
+                      <div className="mb-3 md:mb-4">
+                        <ul className="space-y-1 md:space-y-2">
+                          {exp.highlights.map((highlight, i) => (
+                            <li key={i} className="flex items-start gap-2 text-gray-600 text-xs md:text-sm">
+                              <span className="text-blue-500 mt-0.5 flex-shrink-0">▸</span>
+                              <span>{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Skills */}
+                      {exp.skills && (
+                        <div className="flex flex-wrap gap-1.5 md:gap-2">
+                          {exp.skills.map((skill, i) => (
+                            <span key={i} className={`px-2 md:px-3 py-1 text-xs font-medium rounded-full ${exp.isCurrent ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 border border-green-200' : 'bg-gray-100 text-gray-600'}`}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}

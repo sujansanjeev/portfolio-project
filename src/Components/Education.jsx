@@ -1,305 +1,170 @@
-// import React, { useEffect, useState } from 'react';
-// import { motion } from 'framer-motion';
-// import snu from '../assets/snu.png';
-// import mlm from '../assets/mlm.jpg';
-
-// const Education = () => {
-  
-//   const [inView, setInView] = useState(false);
-
-//   const containerVariants = {
-//     hidden: { opacity: 0 },
-//     visible: {
-//       opacity: 1,
-//       transition: {
-//         staggerChildren: 0.4, 
-//       },
-//     },
-//   };
-
-//   const itemVariants = {
-//     hidden: { opacity: 0, x: -50 }, 
-//     visible: {
-//       opacity: 1,
-//       x: 0, 
-//       transition: { type: 'spring', stiffness: 100, damping: 30 },
-//     },
-//   };
-
- 
-//   const lineVariants = {
-//     hidden: { height: 0 },
-//     visible: { height: '100%', transition: { duration: 3, ease: 'easeInOut' } }, 
-//   };
-
-  
-//   useEffect(() => {
-//     const observer = new IntersectionObserver(
-//       (entries) => {
-//         const entry = entries[0];
-//         if (entry.isIntersecting) {
-//           setInView(true);
-//         }
-//       },
-//       { threshold: 0.5 } // Trigger when 50% of the section is in view
-//     );
-
-//     const container = document.getElementById('education');
-//     if (container) {
-//       observer.observe(container);
-//     }
-
-//     return () => {
-//       if (container) {
-//         observer.unobserve(container);
-//       }
-//     };
-//   }, []);
-
-//   return (
-//     <section id="education" className="py-20">
-//       <div className="container mx-auto px-4">
-//         {/* Title always visible */}
-//         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Education</h2>
-
-//         {/* Container with staggered children animation */}
-//         <motion.div
-//           className="relative"
-//           variants={containerVariants}
-//           initial="hidden"
-//           animate={inView ? 'visible' : 'hidden'} // Animate when in viewport
-//         >
-//           {/* Timeline Line on the left */}
-//           <motion.div
-//             className="absolute left-0 top-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"
-//             variants={lineVariants}
-//             style={{ transform: 'translateX(-50%)' }}
-//           ></motion.div>
-
-//           {/* University Education */}
-//           <motion.div
-//             className="flex items-center justify-start bg-white shadow-md rounded-lg p-6 mb-8 relative z-10"
-//             variants={itemVariants}
-//             style={{ marginLeft: '2rem' }} // Adding left margin for the branch effect
-//           >
-//             <img
-//               src={snu} // Placeholder for logo
-//               alt="Shiv Nadar University Logo"
-//               className="w-auto h-12 rounded-full mr-6"
-//             />
-//             <div>
-//               <h4 className="font-bold text-2xl mb-2 text-gray-900">Shiv Nadar University, Chennai</h4>
-//               <p className="text-lg text-gray-700 mb-2">B.Tech. in Computer Science and Engineering - Internet of Things</p>
-//               <div className="flex justify-between text-gray-600">
-//                 <span>2021 - 2025 (Expected)</span>
-//                 <span>CGPA: 8.0/10.0</span>
-//               </div>
-//             </div>
-//           </motion.div>
-
-//           {/* 12th Grade */}
-//           <motion.div
-//             className="flex items-center justify-start bg-white shadow-md rounded-lg p-6 mb-8 relative z-10"
-//             variants={itemVariants}
-//             style={{ marginLeft: '2rem' }} // Adding left margin for the branch effect
-//           >
-//             <img
-//               src={mlm} // Placeholder for logo
-//               alt="MLM Mamallan School Logo"
-//               className="w-auto h-20 rounded-full mr-6"
-//             />
-//             <div>
-//               <h4 className="font-bold text-2xl mb-2 text-gray-900">M.L.M Mamallan Matriculation Higher Secondary School</h4>
-//               <p className="text-lg text-gray-700 mb-2">12th Grade, Tamil Nadu State Board</p>
-//               <div className="flex justify-between text-gray-600">
-//                 <span>2021</span>
-//                 <span>Percentage: 92%</span>
-//               </div>
-//             </div>
-//           </motion.div>
-
-//           {/* 10th Grade */}
-//           <motion.div
-//             className="flex items-center justify-start bg-white shadow-md rounded-lg p-6 mb-8 relative z-10"
-//             variants={itemVariants}
-//             style={{ marginLeft: '2rem' }} // Adding left margin for the branch effect
-//           >
-//             <img
-//               src={mlm} // Placeholder for logo
-//               alt="MLM Mamallan School Logo"
-//               className="w-auto h-20 rounded-full mr-6"
-//             />
-//             <div>
-//               <h4 className="font-bold text-2xl mb-2 text-gray-900">M.L.M Mamallan Matriculation Higher Secondary School</h4>
-//               <p className="text-lg text-gray-700 mb-2">10th Grade, Tamil Nadu State Board</p>
-//               <div className="flex justify-between text-gray-600">
-//                 <span>2019</span>
-//                 <span>Percentage: 90%</span>
-//               </div>
-//             </div>
-//           </motion.div>
-//         </motion.div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Education;
-
-
-import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import snu from '../assets/snu.png';
 import mlm from '../assets/mlm.jpg';
 
 const Education = () => {
-  const [inView, setInView] = useState(false);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.4,
-      },
+  const educationData = [
+    {
+      institution: 'Shiv Nadar University, Chennai',
+      degree: 'B.Tech. in Computer Science and Engineering',
+      specialization: 'Internet of Things',
+      duration: '2021 - 2025',
+      score: 'CGPA: 8.0/10.0',
+      logo: snu,
+      isCurrent: true,
+      courses: ['IoT Systems', 'Machine Learning', 'Cloud Computing', 'Data Structures'],
     },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { type: 'spring', stiffness: 100, damping: 30 },
+    {
+      institution: 'M.L.M Mamallan Matriculation HSS',
+      degree: 'Higher Secondary Certificate',
+      specialization: 'Computer Science',
+      duration: '2019 - 2021',
+      score: 'Percentage: 92%',
+      logo: mlm,
+      isCurrent: false,
+      courses: ['Computer Science', 'Mathematics', 'Physics', 'Chemistry'],
     },
-  };
-
-  const lineVariants = {
-    hidden: { height: 0 },
-    visible: { height: '100%', transition: { duration: 3, ease: 'easeInOut' } },
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          setInView(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    const container = document.getElementById('education');
-    if (container) {
-      observer.observe(container);
-    }
-
-    return () => {
-      if (container) {
-        observer.unobserve(container);
-      }
-    };
-  }, []);
+    {
+      institution: 'M.L.M Mamallan Matriculation HSS',
+      degree: 'Secondary School Certificate',
+      specialization: 'General Studies',
+      duration: '2017 - 2019',
+      score: 'Percentage: 90%',
+      logo: mlm,
+      isCurrent: false,
+      courses: ['Science', 'Mathematics', 'English', 'Social Studies'],
+    },
+  ];
 
   return (
-    <section id="education" className="py-20">
-      <div className="container mx-auto px-4">
-        {/* Title always visible */}
-        <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Education</h2>
-
-        {/* Container with staggered children animation */}
+    <section id="education" className="py-20 md:py-32 bg-white">
+      <div className="container mx-auto px-4 md:px-6">
         <motion.div
-          className="relative"
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          {/* Timeline Line on the left */}
-          <motion.div
-            className="absolute left-0 top-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"
-            variants={lineVariants}
-            style={{ transform: 'translateX(-50%)' }}
-          ></motion.div>
-
-          {/* University Education */}
-          <motion.div
-            className="flex items-center justify-start bg-white shadow-md rounded-lg p-6 mb-8 relative z-10"
-            variants={itemVariants}
-            style={{ marginLeft: '2rem' }}
-            whileHover={{
-              scale: 1.05, // Slightly scale up the container on hover
-              backgroundColor: 'linear-gradient(to right, #ff7e5f, #feb47b)', // Light gradient on hover
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            <img
-              src={snu}
-              alt="Shiv Nadar University Logo"
-              className="w-auto h-12 rounded-full mr-6"
-            />
-            <div>
-              <h4 className="font-bold text-2xl mb-2 text-gray-900">Shiv Nadar University, Chennai</h4>
-              <p className="text-lg text-gray-700 mb-2">B.Tech. in Computer Science and Engineering - Internet of Things</p>
-              <div className="flex justify-between text-gray-600">
-                <span>2021 - 2025 (Expected)</span>
-                <span>CGPA: 8.0/10.0</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* 12th Grade */}
-          <motion.div
-            className="flex items-center justify-start bg-white shadow-md rounded-lg p-6 mb-8 relative z-10"
-            variants={itemVariants}
-            style={{ marginLeft: '2rem' }}
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: 'linear-gradient(to right, #ff7e5f, #feb47b)',
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          >
-            <img
-              src={mlm}
-              alt="MLM Mamallan School Logo"
-              className="w-auto h-20 rounded-full mr-6"
-            />
-            <div>
-              <h4 className="font-bold text-2xl mb-2 text-gray-900">M.L.M Mamallan Matriculation Higher Secondary School</h4>
-              <p className="text-lg text-gray-700 mb-2">12th Grade, Tamil Nadu State Board</p>
-              <div className="flex justify-between text-gray-600">
-                <span>2021</span>
-                <span>Percentage: 92%</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* 10th Grade */}
-          <motion.div
-            className="flex items-center justify-start bg-white shadow-md rounded-lg p-6 mb-8 relative z-10"
-            variants={itemVariants}
-            style={{ marginLeft: '2rem' }}
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: 'linear-gradient(to right, #ff7e5f, #feb47b)',
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          >
-            <img
-              src={mlm}
-              alt="MLM Mamallan School Logo"
-              className="w-auto h-20 rounded-full mr-6"
-            />
-            <div>
-              <h4 className="font-bold text-2xl mb-2 text-gray-900">M.L.M Mamallan Matriculation Higher Secondary School</h4>
-              <p className="text-lg text-gray-700 mb-2">10th Grade, Tamil Nadu State Board</p>
-              <div className="flex justify-between text-gray-600">
-                <span>2019</span>
-                <span>Percentage: 90%</span>
-              </div>
-            </div>
-          </motion.div>
+            Education
+          </motion.h2>
+          <p className="text-gray-500 text-lg">My academic journey</p>
         </motion.div>
+
+        {/* Horizontal layout - Large featured card + smaller cards */}
+        <div className="max-w-6xl mx-auto">
+          {/* Featured - Current Education */}
+          <motion.div
+            className="mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="relative bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-3xl p-1">
+              <div className="bg-white rounded-3xl p-8 md:p-10">
+                <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                  <div className="flex-shrink-0">
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden bg-white shadow-lg">
+                      <img src={educationData[0].logo} alt={educationData[0].institution} className="w-full h-full object-contain p-2" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 text-center md:text-left">
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-3">
+                      {educationData[0].isCurrent && (
+                        <span className="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full">
+                          Current
+                        </span>
+                      )}
+                      <span className="px-3 py-1 bg-blue-100 text-blue-600 text-sm font-medium rounded-full">
+                        {educationData[0].duration}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                      {educationData[0].institution}
+                    </h3>
+                    
+                    <p className="text-lg text-gray-600 mb-2">{educationData[0].degree}</p>
+                    <p className="text-purple-600 font-medium mb-4">{educationData[0].specialization}</p>
+                    
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-semibold">
+                      {educationData[0].score}
+                    </div>
+                    
+                    {educationData[0].courses && (
+                      <div className="mt-6">
+                        <p className="text-sm text-gray-500 mb-2">Key Courses:</p>
+                        <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                          {educationData[0].courses.map((course, i) => (
+                            <span key={i} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                              {course}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Grid for previous education */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {educationData.slice(1).map((edu, index) => (
+              <motion.div
+                key={index}
+                className="relative"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-md transition-all h-full">
+                  <div className="flex items-start gap-4">
+                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0">
+                      <img src={edu.logo} alt={edu.institution} className="w-full h-full object-contain p-1" />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1 leading-tight">
+                        {edu.institution}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-1">{edu.degree}</p>
+                      <p className="text-sm text-gray-500 mb-3">{edu.specialization}</p>
+                      
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                          {edu.duration}
+                        </span>
+                        <span className="px-2 py-1 bg-gradient-to-r from-gray-700 to-gray-900 text-white text-xs font-medium rounded-full">
+                          {edu.score}
+                        </span>
+                      </div>
+                      
+                      {edu.courses && (
+                        <div className="mt-3 flex flex-wrap gap-1">
+                          {edu.courses.slice(0, 3).map((course, i) => (
+                            <span key={i} className="text-xs text-gray-500">
+                              {course}{i < 2 ? ' •' : ''}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

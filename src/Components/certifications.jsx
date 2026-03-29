@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import gen from '../assets/gen.jpg';
 import cyber from '../assets/cyber.jpg';
@@ -9,105 +8,123 @@ const Certifications = () => {
       title: 'Generative AI Foundations',
       issuer: 'DeepLearning.AI, AWS',
       completionDate: 'December 2024',
-      thumbnail: gen, 
+      thumbnail: gen,
+      gradient: 'from-blue-500 to-purple-500',
       skills: [
-        'Mastered core concepts of Generative AI including transformer architecture, LLMs, and their applications',
-        'Gained practical experience with model pre-training, fine-tuning, and deployment strategies',
-        'Completed hands-on projects in text generation, summarization, and model optimization',
-        'Developed understanding of RLHF, prompt engineering, and responsible AI practices',
-        'Applied knowledge through practical labs using industry-standard tools and frameworks'
-      ]
+        'Transformer architecture & LLMs',
+        'Model pre-training & fine-tuning',
+        'Text generation & summarization',
+        'RLHF & prompt engineering',
+        'Responsible AI practices',
+      ],
     },
     {
       title: 'Google Cybersecurity Professional Certificate',
       issuer: 'Google',
       completionDate: 'August 2024',
-      thumbnail: cyber, 
+      thumbnail: cyber,
+      gradient: 'from-green-500 to-teal-500',
       skills: [
-        'Mastered foundational cybersecurity concepts including network security, encryption, and risk management',
-        'Gained hands-on experience with security tools such as Linux command line, SQL, and SIEM tools',
-        'Developed skills in threat detection, vulnerability assessment, and incident response',
-        'Completed projects in security audits, risk assessments, and network traffic analysis',
-        'Demonstrated proficiency in compliance frameworks and security best practices'
-      ]
-    }
+        'Network security & encryption',
+        'Linux command line & SIEM tools',
+        'Threat detection & assessment',
+        'Security audits & risk analysis',
+        'Compliance frameworks',
+      ],
+    },
   ];
 
   return (
-    <section id="certifications" className="py-12 bg-transparent">
-      <div className="container mx-auto px-4">
-        <motion.h2
-          className="text-4xl font-bold text-center mb-12 text-gray-800"
+    <section id="certifications" className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4 md:px-6">
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-12 md:mb-16"
         >
-          Professional Certifications
-        </motion.h2>
+          <motion.h2
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Certifications
+          </motion.h2>
+          <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto px-4">
+            Professional achievements and learning milestones
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {certifications.map((cert, index) => (
-            <motion.div
-              key={index}
-              className="relative"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
-              <div className="bg-white/80 backdrop-blur-lg p-6 rounded-lg shadow-lg border-2 border-gradient-to-r h-full transform transition-transform hover:scale-[1.02]">
-                <div className="absolute -top-3 -right-3 bg-blue-600 text-white text-sm px-4 py-1 rounded-full">
-                  {cert.completionDate}
-                </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="grid gap-6 md:gap-8">
+            {certifications.map((cert, index) => (
+              <motion.div
+                key={index}
+                className="group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <motion.div
+                  className="relative bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all"
+                  whileHover={{ y: -5 }}
+                >
+                  {/* Gradient top bar */}
+                  <div className={`h-2 bg-gradient-to-r ${cert.gradient}`} />
+                  
+                  <div className="p-5 md:p-8">
+                    <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
+                      {/* Certificate Image - Larger */}
+                      <div className="flex-shrink-0 mx-auto sm:mx-0">
+                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden shadow-lg">
+                          <img
+                            src={cert.thumbnail}
+                            alt={cert.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
 
-                <div className="flex flex-col gap-4">
-                  {/* Thumbnail Container */}
-                  <motion.div
-                    className="relative group cursor-pointer overflow-hidden rounded-lg"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <img
-                      src={cert.thumbnail}
-                      alt={`${cert.title} Certificate`}
-                      className="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:opacity-90"
-                    />
-                
-                  </motion.div>
+                      {/* Content */}
+                      <div className="flex-1 text-center sm:text-left">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                          <div>
+                            <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-1">
+                              {cert.title}
+                            </h3>
+                            <p className={`bg-gradient-to-r ${cert.gradient} bg-clip-text text-transparent font-medium text-sm md:text-base`}>
+                              {cert.issuer}
+                            </p>
+                          </div>
+                          <span className="px-3 py-1 bg-gray-50 text-gray-500 text-xs md:text-sm rounded-full whitespace-nowrap self-start mx-auto sm:mx-0">
+                            {cert.completionDate}
+                          </span>
+                        </div>
 
-                  <div className="mb-4">
-                    <h3 className="text-2xl font-semibold text-gray-800 mb-2">
-                      {cert.title}
-                    </h3>
-                    <p className="text-blue-600 font-medium">
-                      {cert.issuer}
-                    </p>
+                        {/* Skills */}
+                        <div className="flex flex-wrap gap-1.5 md:gap-2 justify-center sm:justify-start">
+                          {cert.skills.map((skill, skillIndex) => (
+                            <motion.span
+                              key={skillIndex}
+                              className="px-2 md:px-3 py-1 text-xs md:text-sm text-gray-600 bg-gray-50 rounded-full"
+                              initial={{ opacity: 0, x: -10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: 0.05 * skillIndex }}
+                            >
+                              {skill}
+                            </motion.span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-
-                  <motion.ul 
-                    className="space-y-3"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    {cert.skills.map((skill, skillIndex) => (
-                      <motion.li
-                        key={skillIndex}
-                        className="flex items-start space-x-2 text-gray-700 text-sm"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 + skillIndex * 0.1 }}
-                      >
-                        <span className="text-blue-500 mt-1">•</span>
-                        <span>{skill}</span>
-                      </motion.li>
-                    ))}
-                  </motion.ul>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
