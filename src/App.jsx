@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 import Navbar from './Components/NavBar';
 import About from './Components/About';
 import Home from './Components/Home';
@@ -10,22 +11,51 @@ import Experience from './Components/Experience';
 import Certifications from './Components/certifications';
 import ParticleBackground from './Components/ParticleBackground';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { FaArrowUp } from 'react-icons/fa';
 import './App.css';
 
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const App = () => {
   const [showArrow, setShowArrow] = useState(false);
+  const lenisRef = useRef(null);
+
+  // Initialize Lenis smooth scrolling
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    lenisRef.current = lenis;
+
+    // Connect Lenis to GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   const handleScroll = (id) => {
     const section = document.getElementById(id);
-    if (section) {
-      gsap.to(window, {
-        duration: 1,
-        scrollTo: section,
-        ease: 'power2.out',
+    if (section && lenisRef.current) {
+      lenisRef.current.scrollTo(section, {
+        offset: 0,
+        duration: 1.5,
       });
     }
   };

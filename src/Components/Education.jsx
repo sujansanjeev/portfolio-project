@@ -6,7 +6,8 @@ const Education = () => {
   const educationData = [
     {
       institution: 'Shiv Nadar University, Chennai',
-      degree: 'B.Tech. in Computer Science and Engineering',
+      degree: 'B.Tech. CSE (IoT)',
+      fullDegree: 'B.Tech. in Computer Science and Engineering',
       specialization: 'Internet of Things',
       duration: '2021 - 2025',
       score: 'CGPA: 8.0/10.0',
@@ -15,49 +16,100 @@ const Education = () => {
       courses: ['IoT Systems', 'Machine Learning', 'Cloud Computing', 'Data Structures'],
     },
     {
-      institution: 'M.L.M Mamallan Matriculation HSS',
-      degree: 'Higher Secondary Certificate',
+      institution: 'M.L.M HSS',
+      fullInstitution: 'M.L.M Mamallan Matriculation HSS',
+      degree: 'Higher Secondary',
+      fullDegree: 'Higher Secondary Certificate',
       specialization: 'Computer Science',
       duration: '2019 - 2021',
-      score: 'Percentage: 92%',
+      score: '92%',
       logo: mlm,
       isCurrent: false,
-      courses: ['Computer Science', 'Mathematics', 'Physics', 'Chemistry'],
     },
     {
-      institution: 'M.L.M Mamallan Matriculation HSS',
-      degree: 'Secondary School Certificate',
+      institution: 'M.L.M HSS',
+      fullInstitution: 'M.L.M Mamallan Matriculation HSS',
+      degree: 'Secondary',
+      fullDegree: 'Secondary School Certificate',
       specialization: 'General Studies',
       duration: '2017 - 2019',
-      score: 'Percentage: 90%',
+      score: '90%',
       logo: mlm,
       isCurrent: false,
-      courses: ['Science', 'Mathematics', 'English', 'Social Studies'],
     },
   ];
 
   return (
-    <section id="education" className="py-20 md:py-32 bg-white">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="education" className="py-12 sm:py-16 md:py-20 lg:py-32 bg-white">
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
             Education
-          </motion.h2>
-          <p className="text-gray-500 text-lg">My academic journey</p>
+          </h2>
+          <p className="text-gray-500 text-sm sm:text-base md:text-lg">My academic journey</p>
         </motion.div>
 
-        {/* Horizontal layout - Large featured card + smaller cards */}
-        <div className="max-w-6xl mx-auto">
+        {/* Mobile Layout - Compact Cards */}
+        <div className="md:hidden max-w-lg mx-auto space-y-4">
+          {educationData.map((edu, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm"
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0">
+                  <img src={edu.logo} alt={edu.institution} className="w-full h-full object-contain p-1" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-semibold text-gray-900 text-sm truncate">
+                      {edu.institution}
+                    </h3>
+                    {edu.isCurrent && (
+                      <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-semibold rounded-full flex-shrink-0">
+                        Current
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-gray-600 text-xs mb-1">{edu.degree}</p>
+                  <p className="text-gray-500 text-xs mb-2">{edu.specialization}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded-full">
+                      {edu.duration}
+                    </span>
+                    <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-medium rounded-full">
+                      {edu.score}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {edu.courses && (
+                <div className="mt-3 pt-3 border-t border-gray-100">
+                  <div className="flex flex-wrap gap-1">
+                    {edu.courses.map((course, i) => (
+                      <span key={i} className="px-2 py-0.5 bg-gray-50 text-gray-600 text-[10px] rounded">
+                        {course}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Desktop Layout */}
+        <div className="hidden md:block max-w-6xl mx-auto">
           {/* Featured - Current Education */}
           <motion.div
             className="mb-8"
@@ -87,10 +139,10 @@ const Education = () => {
                     </div>
                     
                     <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                      {educationData[0].institution}
+                      {educationData[0].fullInstitution || educationData[0].institution}
                     </h3>
                     
-                    <p className="text-lg text-gray-600 mb-2">{educationData[0].degree}</p>
+                    <p className="text-lg text-gray-600 mb-2">{educationData[0].fullDegree}</p>
                     <p className="text-purple-600 font-medium mb-4">{educationData[0].specialization}</p>
                     
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-semibold">
@@ -120,7 +172,6 @@ const Education = () => {
             {educationData.slice(1).map((edu, index) => (
               <motion.div
                 key={index}
-                className="relative"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -135,9 +186,9 @@ const Education = () => {
                     
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-gray-900 mb-1 leading-tight">
-                        {edu.institution}
+                        {edu.fullInstitution || edu.institution}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-1">{edu.degree}</p>
+                      <p className="text-sm text-gray-600 mb-1">{edu.fullDegree}</p>
                       <p className="text-sm text-gray-500 mb-3">{edu.specialization}</p>
                       
                       <div className="flex flex-wrap items-center gap-2">
@@ -148,16 +199,6 @@ const Education = () => {
                           {edu.score}
                         </span>
                       </div>
-                      
-                      {edu.courses && (
-                        <div className="mt-3 flex flex-wrap gap-1">
-                          {edu.courses.slice(0, 3).map((course, i) => (
-                            <span key={i} className="text-xs text-gray-500">
-                              {course}{i < 2 ? ' •' : ''}
-                            </span>
-                          ))}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>

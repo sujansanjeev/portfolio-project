@@ -8,7 +8,6 @@ import {
   SiNodedotjs,
   SiFlask,
   SiHtml5,
-  SiAmazon,
   SiDocker,
   SiGit,
   SiLinux,
@@ -75,7 +74,7 @@ const colorMap = {
   JCL: '#6b5b95',
   CICS: '#ff6600',
   VSAM: '#2e8b57',
-  LangChain: '#3p5mk9',
+  LangChain: '#3b82f6',
   'Hugging Face': '#ffd21e',
   Ollama: '#f2f2f2',
 };
@@ -83,50 +82,94 @@ const colorMap = {
 const Skills = () => {
   const skillCategories = [
     {
-      topic: 'Programming Languages',
+      topic: 'Languages',
+      fullTopic: 'Programming Languages',
       skills: ['Python', 'JavaScript', 'TypeScript', 'Java', 'COBOL', 'SQL'],
     },
     {
-      topic: 'Mainframe & Database',
+      topic: 'Mainframe',
+      fullTopic: 'Mainframe & Database',
       skills: ['Mainframe', 'DB2', 'JCL', 'CICS', 'VSAM'],
     },
     {
-      topic: 'Web Development',
+      topic: 'Web Dev',
+      fullTopic: 'Web Development',
       skills: ['React', 'Angular', 'Node.js', 'Flask', 'HTML/CSS'],
     },
     {
       topic: 'AI/ML & Cloud',
+      fullTopic: 'AI/ML & Cloud',
       skills: ['AWS', 'Azure', 'Docker', 'LangChain', 'Hugging Face', 'Ollama'],
     },
     {
-      topic: 'Tools & Systems',
+      topic: 'Tools',
+      fullTopic: 'Tools & Systems',
       skills: ['Git', 'Linux', 'Ansible', 'Neovim'],
     },
   ];
 
   return (
-    <section id="skills" className="py-16 md:py-24 bg-white">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="skills" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-8 sm:mb-10 md:mb-16"
         >
-          <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
             Skills & <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Technologies</span>
-          </motion.h2>
-          <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto px-4">
+          </h2>
+          <p className="text-gray-500 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
             Tools and technologies I work with
           </p>
         </motion.div>
 
-        <div className="space-y-10 md:space-y-14 max-w-5xl mx-auto">
+        {/* Mobile Layout - Accordion Style */}
+        <div className="md:hidden max-w-lg mx-auto space-y-3">
+          {skillCategories.map((category, catIndex) => (
+            <motion.div
+              key={category.topic}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: catIndex * 0.1 }}
+              className="bg-gray-50 rounded-xl p-4"
+            >
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                {category.topic}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill) => {
+                  const IconComponent = iconMap[skill];
+                  const color = colorMap[skill] || '#666';
+                  
+                  return (
+                    <div
+                      key={skill}
+                      className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white rounded-lg border border-gray-200"
+                    >
+                      {IconComponent ? (
+                        <IconComponent size={14} color={color} />
+                      ) : (
+                        <span className="text-xs font-bold" style={{ color }}>
+                          {skill.charAt(0)}
+                        </span>
+                      )}
+                      <span className="text-xs text-gray-700 font-medium">
+                        {skill}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Desktop Layout */}
+        <div className="hidden md:block space-y-10 md:space-y-14 max-w-5xl mx-auto">
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={category.topic}
@@ -136,7 +179,7 @@ const Skills = () => {
               transition={{ delay: catIndex * 0.1 }}
             >
               <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-4 md:mb-6 text-center">
-                {category.topic}
+                {category.fullTopic}
               </h3>
 
               <div className="flex flex-wrap justify-center gap-3 md:gap-4">

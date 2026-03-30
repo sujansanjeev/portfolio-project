@@ -138,8 +138,8 @@ const About = () => {
               {highlights.map((item, index) => (
                 <motion.div
                   key={index}
-                  className="bg-white rounded-2xl p-4 text-center shadow-sm border border-gray-100"
-                  whileHover={{ y: -5, shadow: 'lg' }}
+                  className="bg-white rounded-2xl p-4 text-center shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300"
+                  whileHover={{ y: -5 }}
                 >
                   <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     {item.value}
