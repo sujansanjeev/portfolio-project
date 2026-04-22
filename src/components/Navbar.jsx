@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
 import logo from '../assets/logo.png';
@@ -16,6 +16,8 @@ const Navbar = ({ handleScroll }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
+  const navRefs = useRef([]);
+  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
 
   useEffect(() => {
     const handleScrollEvent = () => {
@@ -44,6 +46,28 @@ const Navbar = ({ handleScroll }) => {
 
     return () => observer.disconnect();
   }, []);
+
+  // Update sliding pill position when active section changes
+  useEffect(() => {
+    const activeIndex = NAV_ITEMS.findIndex((item) => item.section === activeSection);
+    if (activeIndex === -1) {
+      setPillStyle((prev) => ({ ...prev, opacity: 0 }));
+      return;
+    }
+    const activeBtn = navRefs.current[activeIndex];
+    if (activeBtn) {
+      const parent = activeBtn.parentElement;
+      if (parent) {
+        const parentRect = parent.getBoundingClientRect();
+        const btnRect = activeBtn.getBoundingClientRect();
+        setPillStyle({
+          left: btnRect.left - parentRect.left,
+          width: btnRect.width,
+          opacity: 1,
+        });
+      }
+    }
+  }, [activeSection]);
 
   const handleNavClick = (section) => {
     handleScroll(section);
@@ -81,22 +105,31 @@ const Navbar = ({ handleScroll }) => {
             </span>
           </motion.div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_ITEMS.map((item) => (
-              <motion.button
+          {/* Desktop Navigation — Sliding liquid glass pill */}
+          <div className="hidden md:flex items-center gap-1 relative">
+            {/* Sliding pill background */}
+            <motion.div
+              className="liquid-glass absolute top-0 bottom-0 rounded-full pointer-events-none"
+              animate={{
+                left: pillStyle.left,
+                width: pillStyle.width,
+                opacity: pillStyle.opacity,
+              }}
+              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+            />
+            {NAV_ITEMS.map((item, index) => (
+              <button
                 key={item.section}
+                ref={(el) => { navRefs.current[index] = el; }}
                 onClick={() => handleNavClick(item.section)}
-                className={`px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`relative z-10 px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                   activeSection === item.section
-                    ? 'bg-accent-blue text-white'
-                    : 'text-dark-300 hover:text-dark-100 hover:bg-dark-800'
+                    ? 'text-white'
+                    : 'text-dark-300 hover:text-dark-100'
                 }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
               >
                 {item.label}
-              </motion.button>
+              </button>
             ))}
           </div>
 
