@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
 import logo from '../assets/logo.png';
@@ -16,28 +16,11 @@ const Navbar = ({ handleScroll }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScrollEvent = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Show/hide based on scroll direction (Apple-style)
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        // Scrolling down & past threshold — hide
-        setHidden(true);
-      } else {
-        // Scrolling up — show
-        setHidden(false);
-      }
-      
-      // Track if we've scrolled at all for glass effect
-      setScrolled(currentScrollY > 20);
-      
-      lastScrollY.current = currentScrollY;
+      setScrolled(window.scrollY > 20);
     };
-    
     window.addEventListener('scroll', handleScrollEvent, { passive: true });
     return () => window.removeEventListener('scroll', handleScrollEvent);
   }, []);
@@ -75,8 +58,8 @@ const Navbar = ({ handleScroll }) => {
           scrolled ? 'liquid-glass' : 'bg-transparent'
         }`}
         initial={{ y: '-100%' }}
-        animate={{ y: hidden ? '-100%' : 0 }}
-        transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
       >
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4 flex justify-between items-center" style={{ maxWidth: '100vw' }}>
           {/* Logo */}
