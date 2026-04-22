@@ -54,9 +54,9 @@ const Navbar = ({ handleScroll }) => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-dark-900/80 backdrop-blur-xl border-b border-dark-800'
+            ? 'liquid-glass'
             : 'bg-transparent'
         }`}
         initial={{ y: '-100%' }}
@@ -129,14 +129,14 @@ const Navbar = ({ handleScroll }) => {
             transition={{ duration: 0.2 }}
           >
             {/* Backdrop */}
-            <motion.div 
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            <motion.div
+              className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"
               onClick={() => setIsMenuOpen(false)}
             />
             
             {/* Menu Panel */}
             <motion.div
-              className="absolute top-0 right-0 bottom-0 bg-dark-900 border-l border-dark-800 shadow-2xl"
+              className="absolute top-0 right-0 bottom-0 liquid-glass border-l border-white/10"
               style={{ width: 'min(280px, 85vw)' }}
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
