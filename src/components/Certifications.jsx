@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Award } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
+import Counter from './Counter';
 import gen from '../assets/gen.jpg';
 import cyber from '../assets/cyber.jpg';
 
 const Certifications = () => {
   const sectionRef = useRef(null);
-  const cardsRef = useRef([]);
   const [isVisible, setIsVisible] = useState(false);
 
   const certifications = [
@@ -48,7 +49,9 @@ const Certifications = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="certifications" className="py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-b from-white to-gray-50">
+    <section ref={sectionRef} id="certifications" className="py-16 sm:py-20 md:py-24 lg:py-28 bg-dark-900 relative">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-dark-700 to-transparent" />
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
@@ -56,9 +59,9 @@ const Certifications = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <span className="text-xs sm:text-sm font-semibold text-purple-600 tracking-wider uppercase mb-2 block">Achievements</span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Certifications</h2>
-          <p className="text-gray-500 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
+          <span className="text-xs sm:text-sm font-semibold text-accent-gold tracking-wider uppercase mb-2 block">Achievements</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-dark-100 mb-3 sm:mb-4">Certifications</h2>
+          <p className="text-dark-500 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
             Professional credentials validating expertise in cutting-edge technologies
           </p>
         </div>
@@ -68,8 +71,7 @@ const Certifications = () => {
           {certifications.map((cert, index) => (
             <div
               key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className={`cert-card group relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 ${
+              className={`cert-card group relative bg-dark-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-dark-700 hover:border-dark-600 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
@@ -81,7 +83,7 @@ const Certifications = () => {
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 md:gap-6">
                   {/* Certificate Image with Badge Overlay */}
                   <div className="relative flex-shrink-0 mx-auto sm:mx-0">
-                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 border border-dark-600">
                       <img
                         src={cert.thumbnail}
                         alt={cert.title}
@@ -102,10 +104,10 @@ const Certifications = () => {
                   {/* Content */}
                   <div className="flex-1 text-center sm:text-left">
                     <div className="mb-2 sm:mb-3 md:mb-4">
-                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-0.5 sm:mb-1">
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-dark-100 mb-0.5 sm:mb-1">
                         {cert.title}
                       </h3>
-                      <p className="text-sm sm:text-base md:text-lg text-gray-600">{cert.subtitle}</p>
+                      <p className="text-sm sm:text-base md:text-lg text-dark-400">{cert.subtitle}</p>
                     </div>
 
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-3 sm:mb-4">
@@ -115,7 +117,7 @@ const Certifications = () => {
                       >
                         {cert.issuer}
                       </span>
-                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-gray-100 text-gray-600 rounded-full text-xs sm:text-sm">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-dark-700 text-dark-400 rounded-full text-xs sm:text-sm border border-dark-600">
                         {cert.completionDate}
                       </span>
                     </div>
@@ -125,7 +127,7 @@ const Certifications = () => {
                       {cert.skills.map((skill, skillIndex) => (
                         <span
                           key={skillIndex}
-                          className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm rounded-full border transition-all duration-200 hover:scale-105 cursor-default"
+                          className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm rounded-full border transition-all duration-200 hover:scale-105 cursor-default border-dark-600"
                           style={{
                             borderColor: `${cert.color}40`,
                             color: cert.color,
@@ -140,9 +142,9 @@ const Certifications = () => {
                 </div>
               </div>
 
-              {/* Decorative Corner */}
+              {/* Decorative Corner - hidden on small mobile to prevent overflow */}
               <div
-                className="absolute -bottom-10 -right-10 w-24 sm:w-32 h-24 sm:h-32 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+                className="absolute -bottom-6 -right-6 sm:-bottom-10 sm:-right-10 w-16 sm:w-32 h-16 sm:h-32 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-500 hidden sm:block"
                 style={{ backgroundColor: cert.color }}
               />
             </div>
@@ -157,15 +159,22 @@ const Certifications = () => {
           style={{ transitionDelay: '400ms' }}
         >
           {[
-            { value: '2', label: 'Certifications' },
-            { value: '100+', label: 'Hours Learned' },
-            { value: 'Google & AWS', label: 'Top Providers' },
+            { value: 2, label: 'Certifications' },
+            { value: 100, suffix: '+', label: 'Hours Learned' },
           ].map((stat, index) => (
             <div key={index} className="text-center">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1">{stat.value}</div>
-              <div className="text-xs sm:text-sm text-gray-500">{stat.label}</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark-100 mb-1">
+                <Counter end={stat.value} suffix={stat.suffix || ''} />
+              </div>
+              <div className="text-xs sm:text-sm text-dark-500">{stat.label}</div>
             </div>
           ))}
+          <div className="text-center">
+            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark-100 mb-1">
+              Google & AWS
+            </div>
+            <div className="text-xs sm:text-sm text-dark-500">Top Providers</div>
+          </div>
         </div>
       </div>
     </section>

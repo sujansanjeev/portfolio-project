@@ -14,13 +14,17 @@ const ParticleBackground = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const isMobile = window.innerWidth < 768;
+    const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
 
     const createParticles = () => {
-      const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 10000), 80);
+      const baseCount = Math.min(Math.floor((canvas.width * canvas.height) / 10000), 80);
+      const particleCount = isMobile ? Math.min(baseCount, 40) : (isLowPower ? Math.min(baseCount, 50) : baseCount);
       particlesRef.current = [];
 
       for (let i = 0; i < particleCount; i++) {
@@ -63,8 +67,8 @@ const ParticleBackground = () => {
         ctx.fill();
       }
 
-      ctx.fillStyle = `hsla(${p.hue}, 60%, 45%, ${alpha})`;
-      ctx.strokeStyle = `hsla(${p.hue}, 70%, 60%, ${alpha * 0.6})`;
+      ctx.fillStyle = `hsla(${p.hue}, 60%, 70%, ${alpha})`;
+      ctx.strokeStyle = `hsla(${p.hue}, 70%, 80%, ${alpha * 0.6})`;
       ctx.lineWidth = 0.5;
 
       if (p.type === 'circle') {
@@ -102,9 +106,9 @@ const ParticleBackground = () => {
 
           const maxDist = 120;
           if (dist < maxDist) {
-            const opacity = (1 - dist / maxDist) * 0.12;
+            const opacity = (1 - dist / maxDist) * 0.08;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
+            ctx.strokeStyle = `rgba(0, 102, 255, ${opacity})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -116,9 +120,9 @@ const ParticleBackground = () => {
         const mdy = mouse.y - particles[i].y;
         const mouseDist = Math.sqrt(mdx * mdx + mdy * mdy);
         if (mouseDist < mouse.radius) {
-          const opacity = (1 - mouseDist / mouse.radius) * 0.08;
+          const opacity = (1 - mouseDist / mouse.radius) * 0.06;
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(168, 85, 247, ${opacity})`;
+          ctx.strokeStyle = `rgba(212, 175, 55, ${opacity})`;
           ctx.lineWidth = 1;
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(mouse.x, mouse.y);
@@ -143,15 +147,15 @@ const ParticleBackground = () => {
         ctx.quadraticCurveTo(prev.x, prev.y, midX, midY);
       }
 
-      ctx.strokeStyle = 'rgba(99, 102, 241, 0.15)';
+      ctx.strokeStyle = 'rgba(0, 102, 255, 0.12)';
       ctx.lineWidth = 1.5;
       ctx.lineCap = 'round';
       ctx.stroke();
 
       const lastPoint = trail[trail.length - 1];
       const gradient = ctx.createRadialGradient(lastPoint.x, lastPoint.y, 0, lastPoint.x, lastPoint.y, 15);
-      gradient.addColorStop(0, 'rgba(99, 102, 241, 0.2)');
-      gradient.addColorStop(1, 'rgba(99, 102, 241, 0)');
+      gradient.addColorStop(0, 'rgba(0, 102, 255, 0.15)');
+      gradient.addColorStop(1, 'rgba(0, 102, 255, 0)');
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(lastPoint.x, lastPoint.y, 15, 0, Math.PI * 2);
@@ -163,9 +167,9 @@ const ParticleBackground = () => {
       if (mouse.x < 0) return;
 
       const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, mouse.radius);
-      gradient.addColorStop(0, 'rgba(99, 102, 241, 0.03)');
-      gradient.addColorStop(0.5, 'rgba(168, 85, 247, 0.01)');
-      gradient.addColorStop(1, 'rgba(99, 102, 241, 0)');
+      gradient.addColorStop(0, 'rgba(0, 102, 255, 0.03)');
+      gradient.addColorStop(0.5, 'rgba(212, 175, 55, 0.01)');
+      gradient.addColorStop(1, 'rgba(0, 102, 255, 0)');
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(mouse.x, mouse.y, mouse.radius, 0, Math.PI * 2);

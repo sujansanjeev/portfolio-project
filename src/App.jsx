@@ -1,31 +1,33 @@
 import { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
-import Navbar from './Components/NavBar';
-import About from './Components/About';
-import Home from './Components/Home';
-import Education from './Components/Education';
-import Skills from './Components/Skills';
-import Projects from './Components/Projects';
-import ContactMe from './Components/ContactMe';
-import Experience from './Components/Experience';
-import Certifications from './Components/certifications';
-import ParticleBackground from './Components/ParticleBackground';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { FaArrowUp } from 'react-icons/fa';
+import Navbar from './components/Navbar';
+import LoadingScreen from './components/LoadingScreen';
+import ParticleBackground from './components/ParticleBackground';
+import Hero from './components/Hero';
+import About from './components/About';
+import Education from './components/Education';
+import Skills from './components/Skills';
+import Experience from './components/Experience';
+import Projects from './components/Projects';
+import Certifications from './components/Certifications';
+import Contact from './components/Contact';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [showArrow, setShowArrow] = useState(false);
   const lenisRef = useRef(null);
 
   // Initialize Lenis smooth scrolling
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
@@ -80,14 +82,21 @@ const App = () => {
     handleScroll('home');
   };
 
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   return (
     <>
+      {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
+      
       <ParticleBackground />
+      
       <div className="relative z-10">
         <Navbar handleScroll={handleScroll} />
 
         <section id="home">
-          <Home />
+          <Hero isLoading={isLoading} />
         </section>
 
         <section id="about">
@@ -115,7 +124,7 @@ const App = () => {
         </section>
 
         <section id="contact">
-          <ContactMe />
+          <Contact />
         </section>
       </div>
 
@@ -123,9 +132,9 @@ const App = () => {
         onClick={scrollToHome}
         className={`fixed bottom-6 right-6 p-3 rounded-full cursor-pointer transition-all duration-500 shadow-lg z-50 ${
           showArrow
-            ? 'opacity-100 translate-y-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+            ? 'opacity-100 translate-y-0 bg-accent-blue text-white shadow-accent-blue/30'
             : 'opacity-0 translate-y-5 pointer-events-none'
-        } hover:shadow-xl`}
+        } hover:shadow-xl hover:scale-110`}
       >
         <FaArrowUp className="text-lg" />
       </div>
