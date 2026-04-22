@@ -15,6 +15,15 @@ const NAV_ITEMS = [
 const Navbar = ({ handleScroll }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScrollEvent = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScrollEvent);
+    return () => window.removeEventListener('scroll', handleScrollEvent);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,7 +54,11 @@ const Navbar = ({ handleScroll }) => {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 liquid-glass"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? 'liquid-glass'
+            : 'bg-transparent'
+        }`}
         initial={{ y: '-100%' }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
@@ -76,8 +89,8 @@ const Navbar = ({ handleScroll }) => {
                 onClick={() => handleNavClick(item.section)}
                 className={`px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeSection === item.section
-                    ? 'bg-white/10 text-white'
-                    : 'text-dark-300 hover:text-dark-100 hover:bg-white/5'
+                    ? 'bg-accent-blue text-white'
+                    : 'text-dark-300 hover:text-dark-100 hover:bg-dark-800'
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -151,8 +164,8 @@ const Navbar = ({ handleScroll }) => {
                     onClick={() => handleNavClick(item.section)}
                     className={`w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-all ${
                       activeSection === item.section 
-                        ? 'bg-white/10 text-white' 
-                        : 'text-dark-300 hover:bg-white/5'
+                        ? 'bg-accent-blue/10 text-accent-blue' 
+                        : 'text-dark-300 hover:bg-dark-800'
                     }`}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
