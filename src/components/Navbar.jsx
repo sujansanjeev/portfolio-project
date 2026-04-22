@@ -16,14 +16,29 @@ const Navbar = ({ handleScroll }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
-  const navRefs = useRef([]);
-  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScrollEvent = () => {
-      setScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      
+      // Show/hide based on scroll direction (Apple-style)
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down & past threshold — hide
+        setHidden(true);
+      } else {
+        // Scrolling up — show
+        setHidden(false);
+      }
+      
+      // Track if we've scrolled at all for glass effect
+      setScrolled(currentScrollY > 20);
+      
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener('scroll', handleScrollEvent);
+    
+    window.addEventListener('scroll', handleScrollEvent, { passive: true });
     return () => window.removeEventListener('scroll', handleScrollEvent);
   }, []);
 
@@ -47,28 +62,6 @@ const Navbar = ({ handleScroll }) => {
     return () => observer.disconnect();
   }, []);
 
-  // Update sliding pill position when active section changes
-  useEffect(() => {
-    const activeIndex = NAV_ITEMS.findIndex((item) => item.section === activeSection);
-    if (activeIndex === -1) {
-      setPillStyle((prev) => ({ ...prev, opacity: 0 }));
-      return;
-    }
-    const activeBtn = navRefs.current[activeIndex];
-    if (activeBtn) {
-      const parent = activeBtn.parentElement;
-      if (parent) {
-        const parentRect = parent.getBoundingClientRect();
-        const btnRect = activeBtn.getBoundingClientRect();
-        setPillStyle({
-          left: btnRect.left - parentRect.left,
-          width: btnRect.width,
-          opacity: 1,
-        });
-      }
-    }
-  }, [activeSection]);
-
   const handleNavClick = (section) => {
     handleScroll(section);
     setActiveSection(section);
@@ -78,14 +71,12 @@ const Navbar = ({ handleScroll }) => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'liquid-glass'
-            : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 ${
+          scrolled ? 'liquid-glass' : 'bg-transparent'
         }`}
         initial={{ y: '-100%' }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        animate={{ y: hidden ? '-100%' : 0 }}
+        transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
       >
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4 flex justify-between items-center" style={{ maxWidth: '100vw' }}>
           {/* Logo */}
@@ -105,31 +96,22 @@ const Navbar = ({ handleScroll }) => {
             </span>
           </motion.div>
 
-          {/* Desktop Navigation — Sliding liquid glass pill */}
-          <div className="hidden md:flex items-center gap-1 relative">
-            {/* Sliding pill background */}
-            <motion.div
-              className="liquid-glass absolute top-0 bottom-0 rounded-full pointer-events-none"
-              animate={{
-                left: pillStyle.left,
-                width: pillStyle.width,
-                opacity: pillStyle.opacity,
-              }}
-              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-            />
-            {NAV_ITEMS.map((item, index) => (
-              <button
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-1">
+            {NAV_ITEMS.map((item) => (
+              <motion.button
                 key={item.section}
-                ref={(el) => { navRefs.current[index] = el; }}
                 onClick={() => handleNavClick(item.section)}
-                className={`relative z-10 px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                className={`px-3 md:px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeSection === item.section
-                    ? 'text-white'
-                    : 'text-dark-300 hover:text-dark-100'
+                    ? 'bg-white/10 text-white'
+                    : 'text-dark-300 hover:text-dark-100 hover:bg-white/5'
                 }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {item.label}
-              </button>
+              </motion.button>
             ))}
           </div>
 
@@ -197,8 +179,8 @@ const Navbar = ({ handleScroll }) => {
                     onClick={() => handleNavClick(item.section)}
                     className={`w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-all ${
                       activeSection === item.section 
-                        ? 'bg-accent-blue/10 text-accent-blue' 
-                        : 'text-dark-300 hover:bg-dark-800'
+                        ? 'bg-white/10 text-white' 
+                        : 'text-dark-300 hover:bg-white/5'
                     }`}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
