@@ -15,15 +15,6 @@ const NAV_ITEMS = [
 const Navbar = ({ handleScroll }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScrollEvent = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScrollEvent, { passive: true });
-    return () => window.removeEventListener('scroll', handleScrollEvent);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,9 +45,7 @@ const Navbar = ({ handleScroll }) => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 ${
-          scrolled ? 'liquid-glass' : 'bg-transparent'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 liquid-glass"
         initial={{ y: '-100%' }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
